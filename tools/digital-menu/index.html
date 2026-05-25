@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Menu Preview — SparkStation</title>
+  <meta name="description" content="See how your menu looks on a phone. QR code menus that convert — no app required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --text: #e2e8f0;
+      --text-dim: #64748b;
+      --orange: #f97316;
+      --orange-glow: rgba(249,115,22,0.3);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.06) 0%, transparent 50%);
+    }
+
+    .container { width: 100%; max-width: 900px; }
+
+    /* Layout */
+    .tool-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .tool-layout { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+
+    /* ── Left: Form + Info ──────────────────────────────────────── */
+    .form-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .form-panel h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .form-panel .subtitle {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .text-input, select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .text-input:focus, select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
+    }
+
+    select { appearance: none; cursor: pointer; }
+
+    .cta-button {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .cta-button:hover {
+      background: #ea580c;
+      box-shadow: 0 0 30px var(--orange-glow);
+    }
+
+    .cta-button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Feature bullets */
+    .features {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .feature .check { color: var(--orange); font-weight: 700; }
+
+    /* ── Right: Phone Mockup ────────────────────────────────────── */
+    .phone-panel {
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-mockup {
+      width: 280px;
+      background: #111;
+      border: 3px solid #333;
+      border-radius: 36px;
+      padding: 12px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 24px;
+      background: #111;
+      border-radius: 0 0 16px 16px;
+      margin: 0 auto 12px;
+    }
+
+    .phone-screen {
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 480px;
+      padding: 16px;
+      color: #1a1a2e;
+      font-size: 12px;
+    }
+
+    .phone-screen .menu-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .phone-screen .menu-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1a1a2e;
+    }
+
+    .phone-screen .menu-type {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .phone-screen .menu-rating {
+      font-size: 12px;
+      color: #f97316;
+      margin-top: 4px;
+    }
+
+    .menu-category {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #f97316;
+      margin: 16px 0 8px;
+      letter-spacing: 1px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .menu-item .item-name { font-weight: 600; font-size: 13px; }
+    .menu-item .item-desc { font-size: 10px; color: #64748b; margin-top: 2px; }
+    .menu-item .item-price { font-weight: 700; color: #1a1a2e; white-space: nowrap; margin-left: 8px; }
+
+    .qr-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f97316;
+      color: white;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 16px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .qr-badge .qr-icon { font-size: 20px; }
+
+    /* Email Capture */
+    .email-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .email-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .email-section p { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+
+    .capture-row { display: flex; gap: 8px; }
+    .capture-row .text-input { flex: 1; margin-bottom: 0; }
+    .capture-row .cta-button { width: auto; white-space: nowrap; padding: 12px 20px; }
+
+    @media (max-width: 768px) {
+      .capture-row { flex-direction: column; }
+      .capture-row .cta-button { width: 100%; }
+    }
+
+    .success-msg {
+      text-align: center;
+      padding: 12px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-sm);
+      color: #22c55e;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .hidden { display: none !important; }
+    .capture-note { font-size: 10px; color: var(--text-dim); margin-top: 8px; text-align: center; }
+
+    .spark-brand {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 16px;
+    }
+
+    .spark-brand span { color: var(--orange); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tool-layout">
+      <!-- Left Panel -->
+      <div class="form-panel">
+        <h1>📱 Digital Menu Preview</h1>
+        <p class="subtitle">See how your menu looks on a customer's phone. No app. Just tap.</p>
+
+        <label class="field-label">Restaurant Name</label>
+        <input type="text" id="restaurant-name" class="text-input" placeholder="e.g. Bella's Italian Kitchen" oninput="updatePreview()">
+
+        <label class="field-label">Cuisine Type</label>
+        <select id="cuisine-type" onchange="updatePreview()">
+          <option value="italian">Italian</option>
+          <option value="american">American</option>
+          <option value="mexican">Mexican</option>
+          <option value="japanese">Japanese / Sushi</option>
+          <option value="chinese">Chinese</option>
+          <option value="indian">Indian</option>
+          <option value="thai">Thai</option>
+          <option value="bbq">BBQ / Smokehouse</option>
+          <option value="bakery">Bakery / Café</option>
+          <option value="other">Other</option>
+        </select>
+
+        <button class="cta-button" id="preview-btn" onclick="updatePreview()">
+          🔄 Update Preview
+        </button>
+
+        <div class="features">
+          <div class="feature"><span class="check">✓</span> QR code ordering — no app install</div>
+          <div class="feature"><span class="check">✓</span> Real-time menu updates</div>
+          <div class="feature"><span class="check">✓</span> Works on any phone</div>
+          <div class="feature"><span class="check">✓</span> 18% higher avg. order value</div>
+        </div>
+
+        <!-- Email Capture -->
+        <div class="email-section">
+          <h3>Want this for your restaurant?</h3>
+          <p>We'll send you a personalized demo menu and setup guide. Takes 10 minutes to go live.</p>
+          <form id="capture-form" onsubmit="captureEmail(event)">
+            <div class="capture-row">
+              <input type="email" id="capture-email" class="text-input" placeholder="your@email.com" required>
+              <button type="submit" class="cta-button" id="capture-btn">Send Demo →</button>
+            </div>
+          </form>
+          <div id="capture-success" class="success-msg hidden">✅ Demo menu is on the way! Check your inbox.</div>
+          <p class="capture-note">No spam. We'll send your demo + setup guide. Unsubscribe anytime.</p>
+        </div>
+
+        <p class="spark-brand">Powered by <span>SparkStation</span></p>
+      </div>
+
+      <!-- Right Panel: Phone Mockup -->
+      <div class="phone-panel">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen" id="phone-screen">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Menu templates by cuisine
+    const MENU_TEMPLATES = {
+      italian: {
+        categories: [
+          { name: 'Starters', items: [
+            { name: 'Bruschetta al Pomodoro', desc: 'Toasted bread, fresh tomatoes, basil, balsamic', price: '$12' },
+            { name: 'Calamari Fritti', desc: 'Crispy squid, marinara, lemon aioli', price: '$14' },
+            { name: 'Caprese Salad', desc: 'Buffalo mozzarella, heirloom tomatoes, pesto', price: '$13' },
+          ]},
+          { name: 'Pasta', items: [
+            { name: 'Spaghetti Carbonara', desc: 'Pancetta, egg yolk, pecorino, black pepper', price: '$19' },
+            { name: 'Lobster Ravioli', desc: 'Saffron cream sauce, chives', price: '$26' },
+            { name: 'Penne Arrabbiata', desc: 'Spicy tomato sauce, garlic, fresh basil', price: '$16' },
+          ]},
+          { name: 'Mains', items: [
+            { name: 'Chicken Parmigiana', desc: 'Breaded cutlet, mozzarella, house marinara', price: '$22' },
+            { name: 'Osso Buco', desc: 'Braised veal shank, gremolata, risotto', price: '$34' },
+          ]},
+        ]
+      },
+      american: {
+        categories: [
+          { name: 'Starters', items: [
+            { name: 'Loaded Nachos', desc: 'Tortilla chips, queso, jalapeños, sour cream', price: '$14' },
+            { name: 'Buffalo Wings', desc: 'Classic hot sauce, blue cheese, celery', price: '$16' },
+          ]},
+          { name: 'Burgers', items: [
+            { name: 'Classic Smash Burger', desc: 'Double patty, American cheese, special sauce', price: '$15' },
+            { name: 'Bacon BBQ Burger', desc: 'Smoked bacon, cheddar, onion rings, BBQ sauce', price: '$18' },
+            { name: 'Mushroom Swiss', desc: 'Sautéed mushrooms, Swiss cheese, truffle aioli', price: '$17' },
+          ]},
+          { name: 'Mains', items: [
+            { name: 'Fish & Chips', desc: 'Beer-battered cod, fries, tartar sauce', price: '$19' },
+            { name: 'BBQ Ribs', desc: 'Half rack, house dry rub, coleslaw, cornbread', price: '$28' },
+          ]},
+        ]
+      },
+      mexican: {
+        categories: [
+          { name: 'Antojitos', items: [
+            { name: 'Guacamole Fresco', desc: 'Avocado, lime, cilantro, serrano, totopos', price: '$11' },
+            { name: 'Elote Asado', desc: 'Grilled corn, cotija, chili-lime mayo', price: '$9' },
+          ]},
+          { name: 'Tacos', items: [
+            { name: 'Al Pastor', desc: 'Marinated pork, pineapple, onion, cilantro', price: '$4.50' },
+            { name: 'Carnitas', desc: 'Slow-cooked pork, pickled onion, salsa verde', price: '$5' },
+            { name: 'Pescado', desc: 'Battered fish, cabbage slaw, chipotle crema', price: '$6' },
+          ]},
+          { name: 'Platos', items: [
+            { name: 'Enchiladas Suizas', desc: 'Chicken, tomatillo cream, melted cheese', price: '$17' },
+            { name: 'Carne Asada', desc: 'Grilled skirt steak, chimichurri, rice & beans', price: '$24' },
+          ]},
+        ]
+      },
+      japanese: {
+        categories: [
+          { name: 'Starters', items: [
+            { name: 'Edamame', desc: 'Steamed soybeans, sea salt', price: '$6' },
+            { name: 'Gyoza', desc: 'Pan-fried pork dumplings, ponzu', price: '$9' },
+          ]},
+          { name: 'Sushi Rolls', items: [
+            { name: 'Spicy Tuna Roll', desc: 'Fresh tuna, spicy mayo, cucumber', price: '$14' },
+            { name: 'Dragon Roll', desc: 'Eel, avocado, eel sauce, sesame', price: '$18' },
+            { name: 'Rainbow Roll', desc: 'California roll topped with assorted sashimi', price: '$20' },
+          ]},
+          { name: 'Ramen', items: [
+            { name: 'Tonkotsu Ramen', desc: 'Rich pork broth, chashu, soft egg, nori', price: '$16' },
+            { name: 'Miso Ramen', desc: 'Fermented soybean broth, corn, butter, pork', price: '$15' },
+          ]},
+        ]
+      },
+      chinese: {
+        categories: [
+          { name: 'Dim Sum', items: [
+            { name: 'Xiao Long Bao', desc: 'Soup dumplings, pork, ginger', price: '$10' },
+            { name: 'Shrimp Har Gow', desc: 'Crystal dumplings, bamboo shoots', price: '$9' },
+          ]},
+          { name: 'Chef Specials', items: [
+            { name: 'Kung Pao Chicken', desc: 'Wok-fried chicken, peanuts, Sichuan peppercorn', price: '$17' },
+            { name: 'Mapo Tofu', desc: 'Silken tofu, ground pork, chili bean paste', price: '$15' },
+            { name: 'Peking Duck', desc: 'Crispy roast duck, pancakes, hoisin, scallion', price: '$36' },
+          ]},
+        ]
+      },
+      indian: {
+        categories: [
+          { name: 'Street Food', items: [
+            { name: 'Samosas', desc: 'Crispy pastry, spiced potato, mint chutney', price: '$8' },
+            { name: 'Pani Puri', desc: 'Crisp shells, spiced water, tamarind', price: '$7' },
+          ]},
+          { name: 'Curries', items: [
+            { name: 'Butter Chicken', desc: 'Tandoori chicken, tomato cream sauce, fenugreek', price: '$18' },
+            { name: 'Lamb Vindaloo', desc: 'Spicy Goan curry, potatoes, vinegar', price: '$20' },
+            { name: 'Palak Paneer', desc: 'Fresh spinach, Indian cottage cheese, cumin', price: '$15' },
+          ]},
+          { name: 'Breads', items: [
+            { name: 'Garlic Naan', desc: 'Clay oven-baked, garlic butter, cilantro', price: '$5' },
+          ]},
+        ]
+      },
+      thai: {
+        categories: [
+          { name: 'Starters', items: [
+            { name: 'Tom Yum Soup', desc: 'Spicy lemongrass soup, shrimp, mushrooms', price: '$10' },
+            { name: 'Spring Rolls', desc: 'Crispy vegetable rolls, sweet chili', price: '$8' },
+          ]},
+          { name: 'Curries & Stir Fry', items: [
+            { name: 'Green Curry', desc: 'Coconut milk, bamboo shoots, Thai basil', price: '$17' },
+            { name: 'Pad Thai', desc: 'Rice noodles, shrimp, tamarind, peanuts', price: '$16' },
+            { name: 'Pad Kra Pao', desc: 'Holy basil stir fry, ground pork, fried egg', price: '$15' },
+          ]},
+        ]
+      },
+      bbq: {
+        categories: [
+          { name: 'Smoked Meats', items: [
+            { name: 'Texas Brisket', desc: '14-hour smoked, salt & pepper rub, by the lb', price: '$28' },
+            { name: 'Pulled Pork', desc: 'Carolina gold sauce, slaw, brioche bun', price: '$16' },
+            { name: 'St. Louis Ribs', desc: 'Full rack, dry rub, house BBQ sauce', price: '$32' },
+          ]},
+          { name: 'Sides', items: [
+            { name: 'Mac & Cheese', desc: 'Smoked gouda, cheddar, breadcrumb crust', price: '$8' },
+            { name: 'Collard Greens', desc: 'Braised with smoked turkey, pepper vinegar', price: '$7' },
+            { name: 'Cornbread', desc: 'Cast iron baked, honey butter', price: '$6' },
+          ]},
+        ]
+      },
+      bakery: {
+        categories: [
+          { name: 'Pastries', items: [
+            { name: 'Croissant', desc: 'Buttery, flaky, baked fresh daily', price: '$4.50' },
+            { name: 'Pain au Chocolat', desc: 'Dark chocolate, layered pastry', price: '$5.50' },
+          ]},
+          { name: 'Coffee', items: [
+            { name: 'Latte', desc: 'Double espresso, steamed milk', price: '$5' },
+            { name: 'Cappuccino', desc: 'Espresso, foamed milk, cocoa dust', price: '$4.50' },
+            { name: 'Cold Brew', desc: '18-hour steep, smooth finish', price: '$5.50' },
+          ]},
+          { name: 'Cakes', items: [
+            { name: 'Tiramisu', desc: 'Espresso-soaked ladyfingers, mascarpone', price: '$9' },
+            { name: 'Cheesecake', desc: 'New York style, berry compote', price: '$8.50' },
+          ]},
+        ]
+      },
+    };
+
+    // Default template
+    const DEFAULT_TEMPLATE = MENU_TEMPLATES.italian;
+
+    function updatePreview() {
+      const name = document.getElementById('restaurant-name').value.trim() || 'Your Restaurant';
+      const cuisine = document.getElementById('cuisine-type').value;
+      const template = MENU_TEMPLATES[cuisine] || DEFAULT_TEMPLATE;
+      const rating = (3.8 + Math.random() * 1.0).toFixed(1);
+
+      let html = `
+        <div class="menu-header">
+          <div class="menu-name">${escapeHtml(name)}</div>
+          <div class="menu-type">${cuisine.charAt(0).toUpperCase() + cuisine.slice(1)} Cuisine</div>
+          <div class="menu-rating">★ ${rating} · Digital Menu</div>
+        </div>
+      `;
+
+      template.categories.forEach(cat => {
+        html += `<div class="menu-category">${cat.name}</div>`;
+        cat.items.forEach(item => {
+          html += `
+            <div class="menu-item">
+              <div>
+                <div class="item-name">${escapeHtml(item.name)}</div>
+                <div class="item-desc">${escapeHtml(item.desc)}</div>
+              </div>
+              <div class="item-price">${escapeHtml(item.price)}</div>
+            </div>
+          `;
+        });
+      });
+
+      html += `
+        <div class="qr-badge">
+          <span class="qr-icon">📱</span>
+          <span>Tap phone or scan QR to order</span>
+        </div>
+      `;
+
+      document.getElementById('phone-screen').innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    async function captureEmail(e) {
+      e.preventDefault();
+      const email = document.getElementById('capture-email').value.trim();
+      if (!email || !email.includes('@')) return;
+
+      const btn = document.getElementById('capture-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      const name = document.getElementById('restaurant-name').value.trim() || 'Unknown';
+      const cuisine = document.getElementById('cuisine-type').value;
+
+      try {
+        await fetch('https://futvvdqymbivfuoswrue.supabase.co/rest/v1/email_captures', {
+          method: 'POST',
+          headers: {
+            'apikey': 'eyJhbG...MVKQ',
+            'Authorization': 'Bearer eyJhbG...lZqg',
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify({
+            email,
+            source: 'digital_menu',
+            metadata: { restaurant_name: name, cuisine_type: cuisine },
+          }),
+        });
+      } catch (_) {}
+
+      document.getElementById('capture-form').classList.add('hidden');
+      document.getElementById('capture-success').classList.remove('hidden');
+    }
+
+    // Initial render
+    updatePreview();
+  </script>
+</body>
+</html>
