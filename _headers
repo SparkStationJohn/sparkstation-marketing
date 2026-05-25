@@ -1,0 +1,13 @@
+/*
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/tools/review-audit/*
+  Cache-Control: public, max-age=3600
+
+/assets/*
+  Cache-Control: public, max-age=86400
+
+/functions/api/*
+  Cache-Control: no-cache

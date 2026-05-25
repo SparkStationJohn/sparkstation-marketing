@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Review Audit — SparkStation</title>
+  <meta name="description" content="See what bad reviews are really costing your business. Free audit in 30 seconds.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="audit-container">
+    <!-- Step 1: Business Lookup -->
+    <section id="step-lookup" class="audit-step active">
+      <div class="step-header">
+        <div class="step-icon">🔍</div>
+        <h1>Google Review Audit</h1>
+        <p class="step-subtitle">See what your rating is really costing you.</p>
+      </div>
+
+      <div class="lookup-form">
+        <label class="field-label">Search your business on Google</label>
+        <div class="search-wrapper">
+          <input 
+            type="text" 
+            id="business-search" 
+            placeholder="Search your business name..." 
+            autocomplete="off"
+            class="search-input"
+          >
+          <div id="search-results" class="search-dropdown"></div>
+        </div>
+        <p class="field-hint">We'll pull your real Google rating. No login needed.</p>
+
+        <div class="divider-text">or enter manually</div>
+
+        <div id="manual-entry" class="manual-entry">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="field-label">Business Name</label>
+              <input type="text" id="biz-name" placeholder="e.g. Joe's Pizza" class="text-input">
+            </div>
+            <div class="form-group">
+              <label class="field-label">Business Type</label>
+              <select id="biz-type" class="text-input">
+                <option value="restaurant">Restaurant</option>
+                <option value="salon">Salon / Spa</option>
+                <option value="retail">Retail</option>
+                <option value="realestate">Real Estate</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">Your Google Rating</label>
+            <div id="star-picker" class="star-picker">
+              <span class="star" data-rating="1">★</span>
+              <span class="star" data-rating="2">★</span>
+              <span class="star" data-rating="3">★</span>
+              <span class="star" data-rating="4">★</span>
+              <span class="star" data-rating="5">★</span>
+            </div>
+            <input type="hidden" id="biz-rating" value="3">
+          </div>
+        </div>
+
+        <button id="run-audit-btn" class="cta-button" disabled>
+          <span class="btn-text">Run Free Audit</span>
+          <span class="btn-loader hidden">
+            <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4"/></svg>
+            Pulling your data...
+          </span>
+        </button>
+      </div>
+
+      <p class="trust-text">Free • No credit card • Takes 30 seconds</p>
+    </section>
+
+    <!-- Step 2: Results -->
+    <section id="step-results" class="audit-step">
+      <div class="results-content">
+        <div id="severity-banner" class="severity-banner"></div>
+        <div id="stats-grid" class="stats-grid"></div>
+        <div id="revenue-breakdown" class="revenue-section"></div>
+        <div id="drag-factors" class="drag-section"></div>
+        
+        <!-- Email Capture -->
+        <div id="email-capture" class="email-capture">
+          <div class="capture-header">
+            <span class="capture-icon">📊</span>
+            <div>
+              <h3>Want the full breakdown?</h3>
+              <p>We'll send you a personalized action plan to fix those reviews.</p>
+            </div>
+          </div>
+          <form id="capture-form" class="capture-form">
+            <input type="email" id="capture-email" placeholder="your@email.com" required class="text-input">
+            <button type="submit" class="cta-button" id="capture-btn">
+              Send My Action Plan
+            </button>
+          </form>
+          <p id="capture-success" class="capture-success hidden">✅ Check your inbox — your plan is on the way!</p>
+          <p class="capture-note">No spam. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Loading -->
+    <section id="step-loading" class="audit-step">
+      <div class="loading-state">
+        <svg class="spinner large" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="31.4 31.4"/></svg>
+        <p class="loading-text">Analyzing your reviews...</p>
+        <p class="loading-sub">Crunching the numbers on what that rating costs you</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="widget.js"></script>
+</body>
+</html>
