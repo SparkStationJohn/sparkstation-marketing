@@ -4,6 +4,7 @@
   X-Frame-Options: DENY
 
 /tools/review-audit/*
+  X-Frame-Options: SAMEORIGIN
   Cache-Control: public, max-age=3600
 
 /assets/*
