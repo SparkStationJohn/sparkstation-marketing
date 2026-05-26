@@ -145,7 +145,29 @@
       box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
     }
 
-    select { appearance: none; cursor: pointer; }
+    select { 
+      appearance: none; 
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+
+    select option {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Outfit', 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 12px;
+    }
+
+    select:-moz-focusring {
+      color: transparent;
+      text-shadow: 0 0 0 var(--text);
+    }
 
     .cta-button {
       width: 100%;
@@ -191,94 +213,133 @@
     .phone-panel {
       display: flex;
       justify-content: center;
+      align-items: flex-start;
     }
 
     .phone-mockup {
-      width: 280px;
-      background: #111;
-      border: 3px solid #333;
-      border-radius: 36px;
+      width: 320px;
+      max-width: 100%;
+      background: #0a0a0f;
+      border: 3px solid #1e293b;
+      border-radius: 40px;
       padding: 12px;
-      position: relative;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 72px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
     }
 
     .phone-notch {
-      width: 80px;
-      height: 24px;
-      background: #111;
-      border-radius: 0 0 16px 16px;
-      margin: 0 auto 12px;
+      width: 100px;
+      height: 28px;
+      background: #0a0a0f;
+      border-radius: 0 0 20px 20px;
+      margin: 0 auto 10px;
     }
 
     .phone-screen {
-      background: #fff;
-      border-radius: 24px;
-      overflow: hidden;
-      min-height: 480px;
-      padding: 16px;
-      color: #1a1a2e;
-      font-size: 12px;
+      background: #0f172a;
+      border-radius: 28px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 600px;
+      padding: 20px 16px 16px;
+      color: #f8fafc;
+      font-size: 13px;
+      font-family: 'Outfit', 'Inter', sans-serif;
     }
 
+    /* ── Menu Content Inside Phone ─────────────────────────────── */
     .phone-screen .menu-header {
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     .phone-screen .menu-name {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1a1a2e;
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      color: #f8fafc;
     }
 
     .phone-screen .menu-type {
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 700;
       color: #64748b;
-      margin-top: 2px;
-    }
-
-    .phone-screen .menu-rating {
-      font-size: 12px;
-      color: #f97316;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
       margin-top: 4px;
     }
 
-    .menu-category {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #f97316;
-      margin: 16px 0 8px;
-      letter-spacing: 1px;
-    }
-
-    .menu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    .menu-item .item-name { font-weight: 600; font-size: 13px; }
-    .menu-item .item-desc { font-size: 10px; color: #64748b; margin-top: 2px; }
-    .menu-item .item-price { font-weight: 700; color: #1a1a2e; white-space: nowrap; margin-left: 8px; }
-
-    .qr-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #f97316;
-      color: white;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      margin-top: 16px;
+    .phone-screen .menu-rating {
       font-size: 11px;
       font-weight: 600;
+      color: #f97316;
+      margin-top: 6px;
     }
 
-    .qr-badge .qr-icon { font-size: 20px; }
+    .phone-screen .menu-category-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #f97316;
+      margin: 20px 0 10px;
+    }
+    .phone-screen .menu-category-label:first-of-type { margin-top: 0; }
+
+    .phone-screen .menu-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .phone-screen .menu-card .card-info { min-width: 0; }
+    .phone-screen .menu-card .card-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.2px;
+      color: #f8fafc;
+    }
+    .phone-screen .menu-card .card-desc {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+    .phone-screen .menu-card .card-price {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      color: #f97316;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .phone-screen .phone-footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #475569;
+    }
+    .phone-screen .phone-footer span { color: #f97316; }
 
     /* Email Capture */
     .email-section {
@@ -560,29 +621,28 @@
         <div class="menu-header">
           <div class="menu-name">${escapeHtml(name)}</div>
           <div class="menu-type">${cuisine.charAt(0).toUpperCase() + cuisine.slice(1)} Cuisine</div>
-          <div class="menu-rating">★ ${rating} · Digital Menu</div>
+          <div class="menu-rating">★ ${rating}</div>
         </div>
       `;
 
       template.categories.forEach(cat => {
-        html += `<div class="menu-category">${cat.name}</div>`;
+        html += `<div class="menu-category-label">${cat.name}</div>`;
         cat.items.forEach(item => {
           html += `
-            <div class="menu-item">
-              <div>
-                <div class="item-name">${escapeHtml(item.name)}</div>
-                <div class="item-desc">${escapeHtml(item.desc)}</div>
+            <div class="menu-card">
+              <div class="card-info">
+                <div class="card-name">${escapeHtml(item.name)}</div>
+                <div class="card-desc">${escapeHtml(item.desc)}</div>
               </div>
-              <div class="item-price">${escapeHtml(item.price)}</div>
+              <div class="card-price">${escapeHtml(item.price)}</div>
             </div>
           `;
         });
       });
 
       html += `
-        <div class="qr-badge">
-          <span class="qr-icon">📱</span>
-          <span>Tap phone or scan QR to order</span>
+        <div class="phone-footer">
+          Powered by <span>SparkStation</span>
         </div>
       `;
 
