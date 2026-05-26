@@ -39,6 +39,56 @@ body {
     radial-gradient(ellipse at 80% 80%, rgba(249,115,22,0.03) 0%, transparent 50%);
 }
 
+/* ── Tool Header (nav back to lander) ─────────────────────────── */
+.tool-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tool-header-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.tool-header-back:hover { color: var(--text); }
+
+.tool-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.tool-header-brand .accent { color: var(--orange); }
+.tool-header-brand svg { color: var(--orange); }
+
+/* Push content down below fixed header */
+body { padding-top: 56px; }
+
 .audit-container { width: 100%; max-width: 540px; }
 
 /* Steps */

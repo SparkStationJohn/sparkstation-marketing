@@ -6,7 +6,7 @@
   <title>Digital Menu Preview — SparkStation</title>
   <meta name="description" content="See how your menu looks on a phone. QR code menus that convert — no app required.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0a0a0f;
@@ -34,6 +34,53 @@
       background-image: 
         radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.06) 0%, transparent 50%);
     }
+
+    /* ── Tool Header ────────────────────────────────────────────── */
+    .tool-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tool-header-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tool-header-back:hover { color: var(--text); }
+
+    .tool-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .tool-header-brand .accent { color: var(--orange); }
+    .tool-header-brand svg { color: var(--orange); }
+
+    body { padding-top: 56px; }
 
     .container { width: 100%; max-width: 900px; }
 
@@ -277,6 +324,18 @@
   </style>
 </head>
 <body>
+  <!-- Tool Header -->
+  <header class="tool-header">
+    <a href="/" class="tool-header-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All Tools
+    </a>
+    <a href="/" class="tool-header-brand">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span>Spark<span class="accent">Station</span></span>
+    </a>
+  </header>
+
   <div class="container">
     <div class="tool-layout">
       <!-- Left Panel -->
