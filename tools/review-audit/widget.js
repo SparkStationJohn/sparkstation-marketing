@@ -166,6 +166,26 @@
   // ── Run Audit ──────────────────────────────────────────────────────
   runBtn.addEventListener('click', runAudit);
 
+  // ── "Don't have a listing" link ──────────────────────────────────
+  const noListingLink = $('#no-listing-link');
+  if (noListingLink) {
+    noListingLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Use search input as business name if available
+      const searchVal = searchInput.value.trim();
+      if (searchVal && searchVal.length > 2) {
+        bizNameInput.value = searchVal;
+      }
+      // Show a prompt to enter their business name
+      bizNameInput.focus();
+      bizNameInput.placeholder = 'Enter your business name';
+      // Scroll to manual entry
+      $('#manual-entry').scrollIntoView({ behavior: 'smooth' });
+      // Enable the button
+      updateRunButton();
+    });
+  }
+
   async function runAudit() {
     showStep(stepLoading);
     
